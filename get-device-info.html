@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+</head>
+<body>
+<h1>获取设备信息</h1>
+<p class="dpr"></p>
+<p class="physical-width"></p>
+<p class="logical-width"></p>
+<p class="user-agent"></p>
+
+
+<script>
+    (function() {
+        var dpr = document.getElementsByClassName('dpr')[0];
+        dpr.innerHTML = 'your dpr is ' + window.devicePixelRatio;
+
+        var pw = document.getElementsByClassName('physical-width')[0];
+        pw.innerHTML = 'your physical-width is ' + window.screen.width * window.devicePixelRatio;
+
+        var lw = document.getElementsByClassName('logical-width')[0];
+        lw.innerHTML = 'your logical-width is ' + document.documentElement.clientWidth;
+
+        var device = document.getElementsByClassName('user-agent')[0];
+        device.innerHTML = 'your user-agent  is ' + navigator.userAgent;
+    })()
+</script>
+</body>
+</html>

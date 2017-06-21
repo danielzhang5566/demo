@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <style>
+
+    </style>
+
+</head>
+<body>
+<h1>自动播放音乐加强版</h1>
+<p>1.解决ios微信内打开不能自动播放的问题</p>
+<p>2.解决ios中其它浏览器不能播放的问题(事实上通过touchstart激活,并不是真正意义上的自动播放,目前尚无更好的解决方案)</p>
+<a href="./audio-auto-play.html">这里有一个单纯使用audio标签"autoplay"的版本</a>
+
+<audio id="audio" src="./res/music.mp3"></audio>
+
+
+<!--这段代码得放在头部,保证在WeixinJSBridgeReady执行之前运行-->
+<script>
+
+    function musicInBrowserHandler() {
+        document.getElementById('audio').play();
+        //记得移除事件,防止后续重复触发播放音乐
+        document.removeEventListener('touchstart', musicInBrowserHandler);
+    }
+
+    if (/micromessenger/i.test(navigator.userAgent)) {    //ua是微信浏览器
+        //A.通过WeixinJSBridge监听,解决ios中微信无法自动播放的问题
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            document.getElementById('audio').play();
+        })
+        console.log('is wechat')
+    } else {                                              //不是微信浏览器
+        //B.通过touchstart激活本函数,解决ios中浏览器无法自动播放的问题
+        document.addEventListener('touchstart', musicInBrowserHandler);
+        console.log('not wechat')
+    }
+
+
+
+    /*
+    //真实业务场景,建议只做微信的自动播放,不做ios下其他浏览器的适配,代码如下:
+
+    document.addEventListener("WeixinJSBridgeReady",function(){document.getElementById('audio').play()})
+
+    */
+
+
+</script>
+</body>
+</html>
