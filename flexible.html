@@ -25,13 +25,15 @@
             line-height: 5rem;
         }
 
-        .font16 {
-            font-size: 16px;
+
+        [data-dpr="2"] .fontA  {
+        font-size: 24px;
         }
 
-        .font24 {
-            font-size: 24px;
+        [data-dpr="3"] .fontA  {
+        font-size: 36px;
         }
+
     </style>
 
     <!--flexible.js-->
@@ -46,17 +48,13 @@
 <p>In metal typesetting, a font is a particular size, weight and style of a typeface. Each font was a matched set of type, one piece (called a "sort") for each glyph, and a typeface consisting of a range of fonts that shared an overall design.</p>
 <br>
 
-<h2>2.16px:</h2>
-<p class="font16">0123456789/*-+!@#$%^&^&*(()</p>
-<p class="font16">文字的外在形式特征。就是文字的风格，是文字的外衣。 字体的艺术性体现在其完美的外在形式与丰富的内涵之中。 字体是文化的载体，是社会的缩影。</p>
-<p class="font16">In metal typesetting, a font is a particular size, weight and style of a typeface. Each font was a matched set of type, one piece (called a "sort") for each glyph, and a typeface consisting of a range of fonts that shared an overall design.</p>
+<h2>2.dpr=1时默认大小，dpr=2时24px，dpr=3时36px:</h2>
+<p class="fontA">0123456789/*-+!@#$%^&^&*(()</p>
+<p class="fontA">文字的外在形式特征。就是文字的风格，是文字的外衣。 字体的艺术性体现在其完美的外在形式与丰富的内涵之中。 字体是文化的载体，是社会的缩影。</p>
+<p class="fontA">In metal typesetting, a font is a particular size, weight and style of a typeface. Each font was a matched set of type, one piece (called a "sort") for each glyph, and a typeface consisting of a range of fonts that shared an overall design.</p>
 <br>
 
-<h2>3.24px:</h2>
-<p class="font24">0123456789/*-+!@#$%^&^&*(()</p>
-<p class="font24">文字的外在形式特征。就是文字的风格，是文字的外衣。 字体的艺术性体现在其完美的外在形式与丰富的内涵之中。 字体是文化的载体，是社会的缩影。</p>
-<p class="font24">In metal typesetting, a font is a particular size, weight and style of a typeface. Each font was a matched set of type, one piece (called a "sort") for each glyph, and a typeface consisting of a range of fonts that shared an overall design.</p>
-<br>
+
 
 <h3>1px边框</h3>
 
