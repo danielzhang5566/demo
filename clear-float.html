@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Test</title>
+
+    <style>
+        .box {
+            float: left;
+            margin: 10px;
+            width: 150px;
+            height: 150px;
+            background: lightgreen;
+        }
+
+        .container0 {
+            margin: 10px 10px 200px;
+            background: lightskyblue;
+            border: 2px lightcoral solid;
+        }
+
+        .container1 {
+            margin: 10px;
+            background: lightskyblue;
+            border: 2px lightcoral solid;
+        }
+
+        .container2 {
+            margin: 10px;
+            background: lightskyblue;
+            border: 2px lightcoral solid;
+        }
+
+        .container3 {
+            margin: 10px;
+            background: lightskyblue;
+            border: 2px lightcoral solid;
+        }
+
+        /* container1 */
+        .clear {
+            clear: both;
+            height: 0;
+            line-height: 0;
+            font-size: 0
+        }
+
+        /* container2 */
+        .over-flow {
+            overflow: auto;
+        }
+
+        /* container3 */
+        .clearfix:after {
+            clear: both;
+            content: '.';
+            display: block;
+            width: 0;
+            height: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<h1>清除浮动</h1>
+
+<h2>为什么需要清除浮动？</h2>
+<p>一个块级元素的高度如果没有设置height，那么其高度就是由里面的子元素来撑开的，如果子元素使用浮动，脱离了标准的文档流，那么父元素的高度会将其忽略，会出现“高度坍塌”的问题：(父元素背景色为蓝色，但是没有显示)</p>
+<div class="container0">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+</div>
+<br>
+
+<h2>方法一：使用clear：both（添加clear新元素）</h2>
+<p>原理：利用 clear属性，清除浮动</p>
+<div class="container1">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="clear"></div>
+</div>
+<br>
+
+<h2>方法二：使用clear：both（添加:after伪元素）</h2>
+<p>原理：利用 clear属性，清除浮动</p>
+<div class="container3 clearfix">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+</div>
+<br>
+
+<h2>方法三：给父级元素定义overflow</h2>
+<p>原理：让父元素创建了新的BFC，从而可以包含浮动</p>
+<div class="container2 over-flow">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+</div>
+</body>
+</html>
