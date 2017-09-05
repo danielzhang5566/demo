@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Web Worker</title>
+
+</head>
+<body>
+    <h1>Web Worker</h1>
+    <p>Web Worker 是为了解决 JavaScript 在浏览器环境中没有多线程的问题而出现的HTML5 API。支持 Web Worker 的浏览器会额外提供一个 JavaScript Runtime 供 Web Worker 使用。它的最佳使用场景是执行一些开销较大的数据处理或计算任务。</p>
+    <p>WebWorker有两种，专用worker（dedicatedworker）与公用worker（sharedworker）。</p>
+    <small>注意:要在server(例如localhost)中打开本页面,否则浏览器会报错</small>
+
+    <br />
+    <br />
+
+    <p>主线程---向worker发送任务:<span id="main">帮我计算1000000000个数累加</span></p>
+    <p>worker线程---计算出结果并返回给主线程:<span id="task"></span></p>
+    
+    <script>
+        let worker = new Worker("./res/task.js");
+        let task = {
+            id:1,
+            task:'1+1=?'
+        };
+
+        worker.postMessage(task);
+        worker.onmessage=function(message){
+            let data = message.data;
+            document.getElementById('task').innerHTML = JSON.stringify(data);
+            worker.terminate();
+        };
+        worker.onerror=function(error){
+            console.log(error.filename,error.lineno,error.message);
+        }
+    </script>
+</body>
+</html>
