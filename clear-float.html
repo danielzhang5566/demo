@@ -6,39 +6,31 @@
     <title>Test</title>
 
     <style>
+        .container {
+            width: 50%;
+            margin: 0 auto 200px;
+        }
+
+        .box-container {
+            margin: 10px;
+            background: #92d8f8;
+            border: 2px #f49696 solid;
+        }
+
         .box {
             float: left;
             margin: 10px;
             width: 150px;
             height: 150px;
-            background: lightgreen;
+            background: #a8eda8;
         }
 
-        .container0 {
+        .box-container0 {
             margin: 10px 10px 200px;
-            background: lightskyblue;
-            border: 2px lightcoral solid;
         }
 
-        .container1 {
-            margin: 10px;
-            background: lightskyblue;
-            border: 2px lightcoral solid;
-        }
 
-        .container2 {
-            margin: 10px;
-            background: lightskyblue;
-            border: 2px lightcoral solid;
-        }
-
-        .container3 {
-            margin: 10px;
-            background: lightskyblue;
-            border: 2px lightcoral solid;
-        }
-
-        /* container1 */
+        /* box-container1 */
         .clear {
             clear: both;
             height: 0;
@@ -46,12 +38,12 @@
             font-size: 0
         }
 
-        /* container2 */
+        /* box-container2 */
         .over-flow {
             overflow: auto;
         }
 
-        /* container3 */
+        /* box-container3 */
         .clearfix:after {
             clear: both;
             content: '.';
@@ -60,45 +52,88 @@
             height: 0;
             visibility: hidden;
         }
+
+        /* box-container4 */
+        .table{
+            display:table;
+        }
     </style>
 </head>
 <body>
-<h1>清除浮动</h1>
+    <div class="container">
+        <h1>清除浮动</h1>
 
-<h2>为什么需要清除浮动？</h2>
-<p>一个块级元素的高度如果没有设置height，那么其高度就是由里面的子元素来撑开的，如果子元素使用浮动，脱离了标准的文档流，那么父元素的高度会将其忽略，会出现“高度坍塌”的问题：(父元素背景色为蓝色，但是没有显示)</p>
-<div class="container0">
-    <div class="box">1</div>
-    <div class="box">2</div>
-    <div class="box">3</div>
-</div>
-<br>
+        <h2>为什么需要清除浮动？</h2>
+        <p>一个块级元素的高度如果没有设置height，那么其高度就是由里面的子元素来撑开的，如果子元素使用浮动，脱离了标准的文档流，那么父元素的高度会将其忽略，会出现“高度坍塌”的问题：(父元素背景色为蓝色，但是没有显示出来，我们看到的父元素只有棕的border)</p>
+        <div class="box-container box-container0">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+        <br>
 
-<h2>方法一：使用clear：both（添加clear新元素）</h2>
-<p>原理：利用 clear属性，清除浮动</p>
-<div class="container1">
-    <div class="box">1</div>
-    <div class="box">2</div>
-    <div class="box">3</div>
-    <div class="clear"></div>
-</div>
-<br>
+        <h2>方法一：添加新标签（使用clear：both）</h2>
+        <p>原理：利用 clear属性，清除浮动（clear 属性设置或返回元素相对浮动对象的位置，设置为both即不允许浮动对象出现在元素的左侧或右侧）</p>
+        <div class="box-container box-container1">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="clear"></div>
+        </div>
+        <br>
 
-<h2>方法二：使用clear：both（添加:after伪元素）</h2>
-<p>原理：利用 clear属性，清除浮动</p>
-<div class="container3 clearfix">
-    <div class="box">1</div>
-    <div class="box">2</div>
-    <div class="box">3</div>
-</div>
-<br>
+        <h2>方法二：使用:after 伪元素（添加clearfix）</h2>
+        <p>原理：利用 clear属性，清除浮动（与一类似，不过这种方法是通过after伪元素来给父元素末尾添加一个看不见的clear:both的块元素，来达到清除浮动的目的）</p>
+        <div class="box-container box-container2 clearfix">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+        <br>
 
-<h2>方法三：给父级元素定义overflow</h2>
-<p>原理：让父元素创建了新的BFC，从而可以包含浮动</p>
-<div class="container2 over-flow">
-    <div class="box">1</div>
-    <div class="box">2</div>
-    <div class="box">3</div>
-</div>
+        <h2>方法三：父元素设置 overflow：auto 属性</h2>
+        <p>原理：让父元素创建了新的BFC(块级格式化上下文)，即创建页面上的一个隔离的渲染区域，从而可以包含浮动</p>
+        <div class="box-container box-container3 over-flow">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+
+        <h2>方法四：父元素设置display:table</h2>
+        <p>原理：让父元素创建了新的BFC，即通过设置display：table 属性来闭合浮动</p>
+        <div class="box-container box-container4 table">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+
+        <br><br>
+        <h3>以上列举的方法，无非有两类：</h3>
+        <ol>
+            <li>通过在浮动元素的末尾添加一个空元素，设置 clear：both属性</li>
+            <li>通过设置父元素 overflow 或者display：table 属性来触发BFC，从而闭合浮动</li>
+        </ol>
+
+        <br><br>
+        <h3>如何形成BFC?</h3>
+        <ol>
+            <li>float为 left|right</li>
+            <li>overflow为 hidden|auto|scroll</li>
+            <li>display为 table-cell|table-caption|inline-block</li>
+            <li>position为 absolute|fixed</li>
+        </ol>
+
+        <br><br>
+        <h3>推荐使用：方法二</h3>
+        <pre>
+            <code>.clearfix:after {content:"."; display:block; height:0; visibility:hidden; clear:both}</code>
+        </pre>
+        <ol>
+            <li>display:block 使生成的元素以块级元素显示,占满剩余空间</li>
+            <li>height:0 避免生成内容破坏原有布局的高度</li>
+            <li>visibility:hidden 使生成的内容不可见，并允许可能被生成内容盖住的内容可以进行点击和交互</li>
+            <li>通过 content:"."生成内容作为最后一个元素，至于content里面是点还是其他都是可以的</li>
+        </ol>
+    </div>
 </body>
 </html>
