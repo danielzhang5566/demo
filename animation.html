@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS3 动画</title>
+
+    <style>
+        .container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            margin: 0 auto;
+            border: 2px solid lightblue;
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        #ball {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+            border-radius: 50%;
+
+            animation: move 2s ease-in-out 1s infinite alternate;
+        }
+
+        @keyframes move {
+            0% {
+                left: 0;
+            }
+            100% {
+                left: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS3 动画</h1>
+
+        <div id="ball">
+
+        </div>
+    </div>
+</body>
+</html>
