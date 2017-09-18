@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trigger:事件模拟</title>
+    <style>
+        .container {
+            width: 50%;
+            margin: 0 auto 200px;
+        }
+
+        #button {
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trigger:事件模拟</h1>
+        <button id="button">点击</button>
+        <br>
+
+        <pre><code>
+
+            /**
+             * 事件模拟(提倡方法)
+             * @param {string} element - 绑定元素.
+             * @param {string} eventType - 事件类型.
+             */
+            function triggerEvent(element, eventType) {
+                const event = new Event(eventType);
+                element.dispatchEvent(event);
+            }
+
+
+            /**
+             * 事件模拟(老方法)
+             * @param {string} element - 绑定元素.
+             * @param {string} eventType - 事件类型.
+             */
+            function triggerEventOldFashioned(element, eventType) {
+                let event = document.createEvent('HTMLEvents');
+                event.eventName = eventType;
+                event.initEvent(eventType, true, true);
+                element.dispatchEvent(event);
+            }
+        </code></pre>
+        <br><br>
+
+        <p>
+            调用--控制台输入:
+        </p>
+        <pre>
+            <code>
+                triggerEvent(button,'click');
+                triggerEventOldFashioned(button,'click');
+            </code>
+        </pre>
+    </div>
+
+
+    <script>
+        const button = document.getElementById('button');
+
+        button.addEventListener('click',function(event) {
+            alert('触发点击!')
+        })
+
+
+        //来自:https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+
+        /**
+         * 事件模拟(提倡方法)
+         * @param {string} element - 绑定元素.
+         * @param {string} eventType - 事件类型.
+         */
+        function triggerEvent(element, eventType) {
+            const event = new Event(eventType);
+            element.dispatchEvent(event);
+        }
+
+
+        /**
+         * 事件模拟(老方法)
+         * @param {string} element - 绑定元素.
+         * @param {string} eventType - 事件类型.
+         */
+        function triggerEventOldFashioned(element, eventType) {
+            let event = document.createEvent('HTMLEvents');
+            event.eventName = eventType;
+            event.initEvent(eventType, true, true);
+            element.dispatchEvent(event);
+        }
+
+
+        //使用:
+        //triggerEvent(button,'click');
+        //triggerEventOldFashioned(button,'click');
+    </script>
+</body>
+</html>
