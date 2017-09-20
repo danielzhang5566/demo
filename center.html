@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>水平垂直居中</title>
+
+    <style>
+        .container {
+            width: 50%;
+            margin: 0 auto 200px;
+        }
+
+        .box-container {
+            margin: 10px;
+            width: 500px;
+            height: 300px;
+            background: #a8e4ff;
+            border: 2px #f49696 solid;
+        }
+
+        .box {
+            margin: 10px;
+            background: #6bee6b;
+        }
+
+        /* 情景一:已知宽高 */
+        .box-container1 {
+            position: relative;
+        }
+
+        .box1 {
+            width: 200px;
+            height: 100px;
+
+            position: absolute;
+            left: 50%; /* 配合margin-left的负值实现水平居中 */
+            margin-left: -110px; /* 值的大小等于元素宽度的一半 */
+            top: 50%; /* 配合margin-top的负值实现垂直居中 */
+            margin-top: -50px; /* 值的大小等于元素高度的一半 */
+        }
+
+
+        /* 情景二:未知宽高 */
+        .box-container2 {
+            position: relative;
+        }
+
+        .box2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+
+        /* 情景三:使用Flexbox */
+        .box-container3 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box3 {
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>水平垂直居中</h1><br>
+
+        <h2>情景一:已知宽高</h2>
+        <div class="box-container box-container1">
+            <div class="box box1">child-box</div>
+        </div><br>
+
+        <h2>情景二:未知宽高</h2>
+        <div class="box-container box-container2">
+            <div class="box box2">child-box</div>
+        </div><br>
+
+        <h2>情景三:使用Flexbox</h2>
+        <div class="box-container box-container3">
+            <div class="box box3">child-box</div>
+        </div><br>
+    </div>
+
+    <script>
+        //给情景二和三随机取宽和高
+        let $box2 = document.getElementsByClassName('box2')[0],
+            $box3 = document.getElementsByClassName('box3')[0];
+
+        $box2.style.width  = getRandomInt(100,300) + 'px';
+        $box2.style.height = getRandomInt(50,200) + 'px';
+
+        $box3.style.width  = getRandomInt(100,300) + 'px';
+        $box3.style.height = getRandomInt(50,200) + 'px';
+
+        /**
+         * 获取随机数
+         * @param   {int}  min  范围的最小值
+         * @param   {int}  max  范围的最大值
+         * @return  {int}  min  随机整数
+         */
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</body>
+</html>
