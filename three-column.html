@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Test</title>
+
+    <style>
+        .wrapper {
+            width: 50%;
+            margin: 0 auto 200px;
+        }
+
+        /* 基础样式 */
+        .left, .right{
+            width: 150px;
+            height: 300px;
+            background-color: #ffc107;
+        }
+        .main{
+            height: 300px;
+            background-color: #4caf50;
+        }
+
+
+        /* 方法一：使用浮动 */
+        .float-container .left{
+            float: left;
+        }
+        .float-container .right{
+            float: right;
+        }
+        .float-container .main{
+            margin: 0 150px; /* 150px为左右边栏宽度 */
+        }
+
+
+        /* 方法二：使用绝对定位 */
+        .absolute-container {
+            position: relative;
+        }
+        .absolute-container .left{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .absolute-container .right{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .absolute-container .main{
+            margin: 0 150px;
+        }
+
+
+        /* 方法三：使用flex布局 */
+        .flex-container{
+            display: flex;
+        }
+        .flex-container .main{
+            flex-grow: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>三栏布局</h1>
+
+        <h2>左右两列定宽，中间自适应的方法？</h2>
+        <br>
+
+        <h2>方法一：使用浮动</h2>
+        <p>原理：左右两栏分别设置设置左浮动和右浮动，主栏设定左右margin为两边边栏的宽度,这样视觉上主栏便呈现在左右两栏之间</p>
+        <pre><code>
+            &lt;div class="float-container">
+                &lt;div class="left">.left&lt;/div>
+                &lt;div class="right">.right&lt;/div>
+                &lt;div class="main">.main&lt;/div>
+            &lt;/div>
+            ------------
+            .float-container .left{
+                float: left;
+            }
+            .float-container .right{
+                float: right;
+            }
+            .float-container .main{
+                margin: 0 150px; /* 150px为左右边栏宽度 */
+            }
+        </code></pre>
+        <div class="float-container">
+            <div class="left">.left</div>
+            <div class="right">.right</div>
+            <div class="main">.main</div>
+        </div>
+        <br><br>
+
+        <h2>方法二：使用绝对定位</h2>
+        <p>原理：左右两栏采用绝对定位，固定于页面的左右两侧，主栏同样用margin撑开距离</p>
+        <pre><code>
+            &lt;div class="absolute-container">
+                &lt;div class="left">.left&lt;/div>
+                &lt;div class="right">.right&lt;/div>
+                &lt;div class="main">.main&lt;/div>
+            &lt;/div>
+            ------------
+            .absolute-container {
+                position: relative;
+            }
+            .absolute-container .left{
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .absolute-container .right{
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .absolute-container .main{
+                margin: 0 150px;
+            }
+        </code></pre>
+        <div class="absolute-container">
+            <div class="left">.left</div>
+            <div class="right">.right</div>
+            <div class="main">.main</div>
+        </div>
+        <br><br>
+
+        <h2>方法三：使用flex布局</h2>
+        <p>原理：外层div被设定为伸缩布局，内层左右边栏宽度固定位150像素，而中间内容区main空间分配比例为1，即将剩余空间按1:1全部分配给main，这样便实现了中间的宽度的自适应</p>
+        <pre><code>
+            &lt;div class="flex-container">
+                &lt;div class="left">.left&lt;/div>
+                &lt;div class="main">.main&lt;/div>
+                &lt;div class="right">.right&lt;/div>
+            &lt;/div>
+            -----------
+            .flex-container{
+                display: flex;
+            }
+            .flex-container .main{
+                flex-grow: 1;
+            }
+        </code></pre>
+        <div class="flex-container">
+            <div class="left">.left</div>
+            <div class="main">.main</div>
+            <div class="right">.right</div>
+        </div>
+        <br><br>
+
+
+        <br><br>
+        <h2>注意点</h2>
+        <p>方法一和方法二的原理都是将左右边栏脱离页面普通文档流，然后利用主栏的盒模型(margin)撑开左右空间，这种方法在使用时要注意盒模型的计算方式。</p>
+        <br><br><br><br>
+
+
+        <h2>附：基础样式</h2>
+        <pre><code>
+            .left, .right{
+                width: 150px;
+                height: 300px;
+                background-color: #ffc107;
+            }
+            .main{
+                height: 300px;
+                background-color: #4caf50;
+            }
+        </code></pre>
+        <br><br>
+    </div>
+</body>
+</html>
