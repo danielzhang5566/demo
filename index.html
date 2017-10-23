@@ -11,18 +11,61 @@
           type="image/x-icon"/>
 
     <style>
+        body {
+            background-color: #435a6b;
+        }
+
         h1{
+            margin-top: 2em;
             text-align: center;
-            color: #565A5D;
+            color: white;
         }
 
         a {
             display: block;
-            color: #2f67f6;
+            width: 14em;
+            margin: 0 auto;
+            color: white;
             text-decoration: none;
             text-align: center;
             line-height: 1.6em;
             font-size: 1.2em;
+        }
+
+        /* 鼠标滑过特效 */
+        .hover-effect a::before,
+        .hover-effect a::after {
+            display: inline-block;
+            opacity: 0;
+            -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+            -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+            transition: transform 0.3s, opacity 0.2s;
+        }
+
+        .hover-effect a::before {
+            margin-right: 10px;
+            content: '[';
+            -webkit-transform: translateX(20px);
+            -moz-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        .hover-effect a::after {
+            margin-left: 10px;
+            content: ']';
+            -webkit-transform: translateX(-20px);
+            -moz-transform: translateX(-20px);
+            transform: translateX(-20px);
+        }
+
+        .hover-effect a:hover::before,
+        .hover-effect a:hover::after,
+        .hover-effect a:focus::before,
+        .hover-effect a:focus::after {
+            opacity: 1;
+            -webkit-transform: translateX(0px);
+            -moz-transform: translateX(0px);
+            transform: translateX(0px);
         }
     </style>
 </head>
@@ -31,18 +74,20 @@
 
     <br />
 
-    <a href="./get-device-info.html">获取设备信息</a>
-    <a href="./audio-auto-play.html">自动播放音乐</a>
-    <a href="./audio-auto-play-plus.html">自动播放音乐加强版</a>
-    <a href="./flexible.html">flexible.js测试</a>
-    <a href="./mobile-web-font.html">移动Web字体</a>
-    <a href="./clear-float.html">清除浮动</a>
-    <a href="./lazy-load.html">Lazy Load</a>
-    <a href="./web-worker.html">Web Worker</a>
-    <a href="./trigger.html">Trigger:事件模拟</a>
-    <a href="./animation.html">CSS3 动画</a>
-    <a href="./center.html">水平垂直居中</a>
-    <a href="./three-column.html">三栏布局</a>
+    <div class="hover-effect">
+        <a href="./get-device-info.html">获取设备信息</a>
+        <a href="./audio-auto-play.html">自动播放音乐</a>
+        <a href="./audio-auto-play-plus.html">自动播放音乐加强版</a>
+        <a href="./flexible.html">flexible.js测试</a>
+        <a href="./mobile-web-font.html">移动Web字体</a>
+        <a href="./clear-float.html">清除浮动</a>
+        <a href="./lazy-load.html">Lazy Load</a>
+        <a href="./web-worker.html">Web Worker</a>
+        <a href="./trigger.html">Trigger:事件模拟</a>
+        <a href="./animation.html">CSS3 动画</a>
+        <a href="./center.html">水平垂直居中</a>
+        <a href="./three-column.html">三栏布局</a>
+    </div>
 
 
     <script>
