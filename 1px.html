@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        .line {
+            height: 1px;
+            width: 100%;
+            background: lightgray;
+            margin: 10px 0;
+        }
+
+        .demo {
+
+        }
+
+        .demo0 {
+            border: 1px solid #000;
+        }
+
+        .demo1-container {
+            position: relative;
+        }
+
+        .demo1::after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: 1px solid #000;
+            transform-origin: top left;
+        }
+
+        /* 设备像素比为 1 */
+        @media only screen and (-webkit-min-device-pixel-ratio: 1), only screen and (min-device-pixel-ratio: 1) {
+
+        }
+
+        /* 设备像素比为 2 */
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            .demo1::after {
+                position: absolute;
+                content: '';
+                width: 200%;
+                height: 200%;
+                top: 0;
+                left: 0;
+                border: 1px solid #000;
+                transform: scale(0.5);
+                transform-origin: top left;
+            }
+        }
+
+        /* 设备像素比为 3 */
+        @media only screen and (-webkit-min-device-pixel-ratio: 3), only screen and (min-device-pixel-ratio: 3) {
+            .demo1::after {
+                position: absolute;
+                content: '';
+                width: 300%;
+                height: 300%;
+                top: 0;
+                left: 0;
+                border: 1px solid #000;
+                transform: scale(0.333);
+                transform-origin: top left;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>1px边框（细线）问题</h1>
+<p class="dpr"></p>
+<p class="physical-width"></p>
+<p class="logical-width"></p>
+<p class="client-width"></p>
+<div class="line"></div>
+<p>背景：假设这样一个需求，你需要在任何屏幕上这条边框都是1物理像素. 我们当然不能直接一个border-width:1px，因为在retina屏下css的1px映射到物理像素就可能会有2px或者3px。</p>
+<div class="demo demo0">这是个直接设置1px边框的例子</div>
+<div class="line"></div>
+<h3>解决方案</h3>
+<h4>方案一：使用transform</h4>
+<div class="demo1-container">
+    <div class="demo demo1">使用transform然后scale缩放，不同dpr缩放程度不同</div>
+</div>
+<h4>方案二：viewport+rem+js</h4>
+<div>(demo略)和手淘的flexible.js一样: * 在dpr = 1 时， 输出是1:1的还原，因此不必顾虑; * 在dpr = 2 时，设置initial-scale=0.5; * 在dpr = 3
+    时，设置initial-scale=0.3333333333333333. 这时我们方可直接的写1px，然后交由浏览器去进行缩放.
+</div>
+
+
+<div class="line"></div>
+<p>归根结底，都是先画1px，然后进行"缩小"</p>
+<p>其它方案如box-shadow、border-image、甚至直接写0.5px的，支持有限且不太方便。</p>
+
+<script>
+
+  let dpr = document.getElementsByClassName('dpr')[0]
+  dpr.innerHTML = `当前屏幕 dpr：${window.devicePixelRatio}`
+
+  let pw = document.getElementsByClassName('physical-width')[0]
+  pw.innerHTML = `当前屏幕 物理像素：${window.screen.width * window.devicePixelRatio}`
+
+  let lw = document.getElementsByClassName('logical-width')[0]
+  lw.innerHTML = `当前屏幕 逻辑像素(css像素)：${window.screen.width}`
+
+
+</script>
+
+</body>
+</html>
