@@ -11,7 +11,10 @@
 <p class="dpr"></p>
 <p class="physical-width"></p>
 <p class="logical-width"></p>
+<p class="client-width"></p>
+<br>
 <p class="user-agent"></p>
+<br>
 <p class="ip"></p>
 <p class="isp"></p>
 <p class="location"></p>
@@ -19,31 +22,34 @@
 
 <script>
 
-    let dpr = document.getElementsByClassName('dpr')[0];
-    dpr.innerHTML = 'your dpr is ' + window.devicePixelRatio;
+    let dpr = document.getElementsByClassName('dpr')[0]
+    dpr.innerHTML = `当前屏幕 dpr：${window.devicePixelRatio} (window.devicePixelRatio)`
 
-    let pw = document.getElementsByClassName('physical-width')[0];
-    pw.innerHTML = 'your physical-width is ' + window.screen.width * window.devicePixelRatio;
+    let pw = document.getElementsByClassName('physical-width')[0]
+    pw.innerHTML = `当前屏幕 物理像素：${window.screen.width * window.devicePixelRatio} (window.screen.width * window.devicePixelRatio)`
 
-    let lw = document.getElementsByClassName('logical-width')[0];
-    lw.innerHTML = 'your logical-width is ' + document.documentElement.clientWidth;
+    let lw = document.getElementsByClassName('logical-width')[0]
+    lw.innerHTML = `当前屏幕 逻辑像素(css像素)：${window.screen.width} (window.screen.width)`
 
-    let device = document.getElementsByClassName('user-agent')[0];
-    device.innerHTML = 'your user-agent  is ' + navigator.userAgent;
+    let cw = document.getElementsByClassName('client-width')[0]
+    cw.innerHTML = `当前浏览器 视图窗口宽度：${document.documentElement.clientWidth} (document.documentElement.clientWidth)`
+
+    let device = document.getElementsByClassName('user-agent')[0]
+    device.innerHTML = '当前浏览器 user-agent：' + navigator.userAgent
 
 
     //通过第三方api获取ip/地址/运营商信息
     ajax('https://apimk.com/ip.json', 'GET', null, (responseText) => {
-        let data = JSON.parse(responseText);
+        let data = JSON.parse(responseText)
 
-        let ip = document.getElementsByClassName('ip')[0];
-        ip.innerHTML = 'your ip  is ' + data.ip;
+        let ip = document.getElementsByClassName('ip')[0]
+        ip.innerHTML = '当前IP地址：' + data.ip
 
-        let isp = document.getElementsByClassName('isp')[0];
-        isp.innerHTML = 'your isp  is ' + data.isp;
+        let isp = document.getElementsByClassName('isp')[0]
+        isp.innerHTML = '当前ISP运营商：' + data.isp
 
-        let location = document.getElementsByClassName('location')[0];
-        location.innerHTML = 'your location  is ' + data.city + ',' + data.state + ',' + data.country;
+        let location = document.getElementsByClassName('location')[0]
+        location.innerHTML = '当前位置：' + data.city + ',' + data.state + ',' + data.country
     })
 
 
@@ -57,25 +63,25 @@
      */
     function ajax(url, method, param, callback) {
 
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest()
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4) {
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                    callback && callback(xhr.responseText);
+                    callback && callback(xhr.responseText)
                 }
             }
         }
 
         xhr.onerror = (e) => {
-            console.log(e.message);
-        };
+            console.log(e.message)
+        }
 
-        xhr.open(method, url, true);
+        xhr.open(method, url, true)
 
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 
-        xhr.send(param);
+        xhr.send(param)
     }
 </script>
 
