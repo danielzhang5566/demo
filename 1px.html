@@ -5,99 +5,194 @@
     <title>Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        .line {
-            height: 1px;
-            width: 100%;
-            background: lightgray;
-            margin: 10px 0;
+        .wrapper {
+            width: 50%;
+            margin: 0 auto 200px;
         }
 
         .demo {
-
+            margin-bottom: 30px;
+            width: 100%;
         }
 
-        .demo0 {
-            border: 1px solid #000;
-        }
-
-        .demo1-container {
+        .box {
+            width: 100px;
+            height: 100px;
             position: relative;
         }
 
-        .demo1::after {
-            position: absolute;
+        .box1 {
+            border: 1px solid red;
+        }
+
+        .box2:after {
             content: '';
-            width: 100%;
-            height: 100%;
+            position: absolute;
             top: 0;
             left: 0;
-            border: 1px solid #000;
-            transform-origin: top left;
+            border: 1px solid red;
+            box-sizing: border-box;
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5);
+            transform-origin: left top;
         }
 
-        /* 设备像素比为 1 */
-        @media only screen and (-webkit-min-device-pixel-ratio: 1), only screen and (min-device-pixel-ratio: 1) {
-
+        .box3 {
+            box-shadow: 0px 0px 1px 0px red inset;
         }
 
-        /* 设备像素比为 2 */
-        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-            .demo1::after {
-                position: absolute;
-                content: '';
-                width: 200%;
-                height: 200%;
-                top: 0;
-                left: 0;
-                border: 1px solid #000;
-                transform: scale(0.5);
-                transform-origin: top left;
-            }
+        .svg {
+            background: none;
+            height: 1px;
+            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAlJyBoZWlnaHQ9JzFweCc+PGxpbmUgeDE9JzAnIHkxPScwJyB4Mj0nMTAwJScgeTI9JzAnIHN0cm9rZT0nIzAwMCc+PC9saW5lPjwvc3ZnPg==");
         }
 
-        /* 设备像素比为 3 */
-        @media only screen and (-webkit-min-device-pixel-ratio: 3), only screen and (min-device-pixel-ratio: 3) {
-            .demo1::after {
-                position: absolute;
-                content: '';
-                width: 300%;
-                height: 300%;
-                top: 0;
-                left: 0;
-                border: 1px solid #000;
-                transform: scale(0.333);
-                transform-origin: top left;
-            }
+        .vertical-line {
+            width: 1px;
+            height: 100px;
+            transform: scale(0.5, 1);
+            background: red;
+        }
+
+        pre {
+            overflow: scroll;
         }
     </style>
 </head>
 <body>
-<h1>1px边框（细线）问题</h1>
-<p class="dpr"></p>
-<p class="physical-width"></p>
-<p class="logical-width"></p>
-<p class="client-width"></p>
-<div class="line"></div>
-<p>背景：假设这样一个需求，你需要在任何屏幕上这条边框都是1物理像素. 我们当然不能直接一个border-width:1px，因为在retina屏下css的1px映射到物理像素就可能会有2px或者3px。</p>
-<div class="demo demo0">这是个直接设置1px边框的例子</div>
-<div class="line"></div>
-<h3>解决方案</h3>
-<h4>方案一：使用transform</h4>
-<div class="demo1-container">
-    <div class="demo demo1">使用transform然后scale缩放，不同dpr缩放程度不同</div>
+<div class="wrapper">
+    <h1>1px边框（细线）问题</h1>
+
+    <p class="dpr"></p>
+    <p class="physical-width"></p>
+    <p class="logical-width"></p>
+    <p class="client-width"></p>
+    <br>
+
+    <div class="demo">
+        <h3>原始地设置1px border</h3>
+        <div class="box box1"></div>
+    </div>
+
+    <div class="demo">
+        <h3>transform 缩放（伪元素实现）</h3>
+        <div class="box box2"></div>
+        <pre><code>
+        ```css
+        .box {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        // 1dpr 屏幕时
+        .box-border:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid red;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+        }
+
+        // Retina 屏幕时
+        .box-border-scale:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid red;
+            box-sizing: border-box;
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5);
+            transform-origin: left top;
+        }
+        ```
+
+        不过要注意，当是 Retina 屏才缩放（当然做移动站的话，就不必了）：
+        ```js
+            if(window.devicePixelRatio && devicePixelRatio >= 2){
+            document.querySelector('.box').className = 'box-border-scale';
+        }
+        ```
+        </code></pre>
+    </div>
+
+    <div class="demo">
+        <h3>transform 缩放（直接缩元素，适合竖线/横线）</h3>
+        <div class="vertical-line"></div>
+        <pre><code>
+            ```css
+                .vertical-line {
+                    width: 1px;
+                    height: 100px;
+                    transform: scale(0.5, 1);
+                    background: red;
+                }
+            ```
+        </code></pre>
+    </div>
+
+
+    <div class="demo">
+        <h3>svg 实现</h3>
+        <div class="svg"></div>
+        <svg height='1px' width='100%' xmlns='http://www.w3.org/2000/svg'>
+            <line stroke='#000' x1='0' x2='100%' y1='0' y2='0'></line>
+        </svg>
+        <pre><code>
+        设置background为svg图片
+        ```css
+            .svg {
+                background: none;
+                height: 1px;
+                background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAlJyBoZWlnaHQ9JzFweCc+PGxpbmUgeDE9JzAnIHkxPScwJyB4Mj0nMTAwJScgeTI9JzAnIHN0cm9rZT0nIzAwMCc+PC9saW5lPjwvc3ZnPg==");
+            }
+        ```
+        值需要通过base64转译
+        </code></pre>
+    </div>
+
+    <div class="demo">
+        <h3>viewport + rem 实现（demo略）</h3>
+        <pre><code>
+            在devicePixelRatio = 2 时，输出viewport：
+            ```html
+                <meta content="initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no" name="viewport">
+            ```
+
+            在devicePixelRatio = 3 时，输出viewport：
+            ```html
+                <meta content="initial-scale=0.3333333333333333, maximum-scale=0.3333333333333333, minimum-scale=0.3333333333333333, user-scalable=no" name="viewport">
+            ```
+
+            这种兼容方案适合新的项目，老的项目修改成本过大。
+            具体可以看看《使用Flexible实现手淘H5页面的终端适配》
+        </code></pre>
+    </div>
+
+    <div class="demo">
+        <h3>box-shadow 实现（效果一般）</h3>
+        <div class="box box3"></div>
+        <pre><code>
+        ```css
+            .box3 {
+                box-shadow: 0px 0px 1px 0px red inset;
+            }
+        ```
+        </code></pre>
+    </div>
+
+
+    <div class="demo">
+        <h3>微信小程序中</h3>
+        <p>小程序中的 1rpx 实际上并不严格对齐实际像素，实际可能会转化 0.54px 之类的小数形式</p>
+    </div>
 </div>
-<h4>方案二：viewport+rem+js</h4>
-<div>(demo略)和手淘的flexible.js一样: * 在dpr = 1 时， 输出是1:1的还原，因此不必顾虑; * 在dpr = 2 时，设置initial-scale=0.5; * 在dpr = 3
-    时，设置initial-scale=0.3333333333333333. 这时我们方可直接的写1px，然后交由浏览器去进行缩放.
-</div>
-
-<div class="line"></div>
-<p>归根结底，都是先画1px，然后进行"缩小"</p>
-<p>其它方案如box-shadow、border-image、甚至直接写0.5px的，支持有限且不太方便。</p>
-
-
-<div class="line"></div>
-<p>对于微信小程序，让设计稿以750px为基准，css写边框设置为1rpx即为物理像素1px。</p>
 
 <script>
 
