@@ -78,6 +78,12 @@
             text-align: justify;
             text-align-last: justify;
         }
+
+        .title:after {
+            content: '';
+            width: 100%;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -176,7 +182,17 @@
             text-align: justify;
             text-align-last: justify;
         }
+
+        /* 兼容IOS */
+        .title:after {
+            content: '';
+            width: 100%;
+            display: inline-block;
+        }
         </code></pre>
+
+        <p>注：IOS端WKWebView，不支持 text-align-last，可以使用after伪类兼容————添加一个空白行，使得当前行不是最后一行，实现等价于text-align-last:justify;分散对齐的效果。</p>
+
         <div class="title">姓名</div>
         <div class="title">手机号码</div>
         <div class="title">身份证</div>
