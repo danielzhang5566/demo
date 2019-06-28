@@ -64,6 +64,20 @@
         .box3 {
 
         }
+
+
+        /* 文字的两端对齐 */
+        .title {
+            margin: 10px 0;
+            border: 1px solid red;
+            width: 100px;
+
+            height: 30px;
+            line-height: 30px;
+
+            text-align: justify;
+            text-align-last: justify;
+        }
     </style>
 </head>
 <body>
@@ -147,6 +161,27 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         </code></pre><br><br>
+
+
+        <h2>附:文字的两端对齐</h2>
+        <pre><code>
+        .title {
+            margin: 10px 0;
+            border: 1px solid red;
+            width: 100px;
+
+            height: 30px;
+            line-height: 30px;
+
+            text-align: justify;
+            text-align-last: justify;
+        }
+        </code></pre>
+        <div class="title">姓名</div>
+        <div class="title">手机号码</div>
+        <div class="title">身份证</div>
+        <div class="title">密码</div>
+        <br><br><br><br><br><br>
     </div>
 
     <script>
