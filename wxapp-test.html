@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js" type="text/javascript"></script>
+    <style>
+        .button {
+            width: 100%;
+            height: 38px;
+            padding: 5px;
+            margin: 10px 5px;
+            background: lightgreen;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .info {
+            margin: 20px 5px;
+            border: solid gray 1px;
+        }
+
+        p {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+<div class="button" onclick="jumpToMiniProgram()">回跳小程序首页</div>
+<div class="button" onclick="getCoupon(10086)">领取优惠券（会校验登录）</div>
+
+<!--<div class="len"></div>-->
+
+<div class="info">
+    <h3>当前URL：</h3>
+    <p id="url"></p>
+
+
+    <h3>URL中的cookie字段：</h3>
+    <p id="cookie"></p>
+
+    <h3>获取的wxappType：</h3>
+    <p id="wxappType"></p>
+</div>
+
+<script>
+    drawUI()
+
+    function drawUI() {
+        // let $len = document.querySelector('.len')
+        // location.search.split('?')[1].split('&')
+
+        document.querySelector('#url').innerText = location.href
+        try {
+            let cookieObjectFromUrl = JSON.parse(decodeURIComponent(getQueryStringItem('cookie')))
+
+            document.querySelector('#cookie').innerText = decodeURIComponent(getQueryStringItem('cookie'))
+            document.querySelector('#wxappType').innerText = cookieObjectFromUrl.wxapp_type
+        } catch(e) {
+            console.error('解析URL中的cookie字段出现错误')
+        }
+    }
+
+    function jumpToMiniProgram() {
+        wx.miniProgram.navigateTo({url: '/pages/index/index'})
+    }
+
+
+    // 点击“领取优惠券”
+    function getCoupon(couponID) {
+        let cookieObjectFromUrl = {} // 从url参数中取出生成的cookie对象
+        let wxappType // 小程序类型；1京东购物 2京喜购物
+
+        try {
+            cookieObjectFromUrl = JSON.parse(decodeURIComponent(getQueryStringItem('cookie')))
+        } catch(e) {
+            console.error('解析URL中的cookie字段出现错误')
+        }
+
+        wxappType = cookieObjectFromUrl.wxapp_type
+
+        if (isLogin()) {
+            // 发起领券请求
+        } else {
+            // 未登录情况下，如果是在主购、拼购小程序环境下，使用微信API跳转小程序登录页
+            if (wxappType && [1, 2].indexOf(wxappType) > -1) {
+                // 两个参数都要传：rurl、from
+                let returnUrl = encodeURIComponent('https://pro.m.jd.com/index.html?ptag=xxx&pageType=xxx')
+                wx.miniProgram.navigateTo({ url: `/pages/login/index?rurl=${returnUrl}&biz=xxx&bindSceneID=721194798&bindPtag=7608.3.2` })
+            }
+        }
+
+    }
+
+    // 从URL参数中提取某个字段key的值value
+    function getQueryStringItem(key) {
+        let searchArr = location.search.slice(1).split('&');
+
+        for (let i = 0; i < searchArr.length; i++) {
+            let item = searchArr[i].split('=') // type=111
+            if (key === item[0]) {
+                return item.length === 2 ? item[1] : ''
+            }
+        }
+
+        return ''
+    }
+
+    function isLogin() {
+        return false
+    }
+</script>
+</body>
+</html>
