@@ -91,7 +91,7 @@
             // 发起领券请求
         } else {
             // 未登录情况下，如果是在主购、拼购小程序环境下，使用微信API跳转小程序登录页
-            if (wxappType && [1, 2].indexOf(wxappType) > -1) {
+            if (wxappType && ['1', '2'].indexOf(wxappType) > -1) {
                 // 两个参数都要传：rurl、from
                 // let returnUrl = encodeURIComponent('https://lab.susamko.com/demo/wxapp-test.html?aaa=aaa&bbb=bbb&ccc=111')
                 let returnUrl = encodeURIComponent('https://pro.m.j' + 'd.com/mini/active/46JHayxvEHu2FdkMPFZRnDchtmSH/index.html?wxAppName=jd&ptag=138567.3.1&pps=focus.FO4O705:BOC6FAF3O519EC4O72974O2B693O23O1:FO8O17O1FOFO7081CO7297BOC6FAF2E399242005462EF&mini=1')
