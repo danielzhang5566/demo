@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>水平垂直居中</title>
+    <title>居中和对齐</title>
 
     <style>
         .wrapper {
@@ -88,9 +88,10 @@
 </head>
 <body>
     <div class="wrapper">
-        <h1>水平垂直居中</h1><br>
+        <h1>居中和对齐</h1>
 
-        <h2>情景一:已知宽高</h2>
+
+        <h2>一、水平垂直居中（已知宽高）</h2>
         <pre><code>
         .box-container1 {
             position: relative;
@@ -111,7 +112,9 @@
             <div class="box box1">child-box</div>
         </div><br><br>
 
-        <h2>情景二:未知宽高</h2>
+
+
+        <h2>二、水平垂直居中（未知宽高）</h2>
         <pre><code>
         .box-container2 {
             position: relative;
@@ -128,7 +131,9 @@
             <div class="box box2">child-box</div>
         </div><br><br>
 
-        <h2>情景三:使用Flexbox</h2>
+
+
+        <h2>三、水平垂直居中（使用Flexbox）</h2>
         <pre><code>
         .box-container3 {
             display: flex;
@@ -145,7 +150,7 @@
         </div><br><br><br><br><br><br>
 
 
-        <h3>注:情景二和情景三的child-box会随机宽高</h3>
+        <h3>注:二和三的child-box会随机宽高</h3>
         <p>每次刷新页面,其宽度和高度都会动态地改变:</p>
         <pre><code>
         let $box2 = document.getElementsByClassName('box2')[0],
@@ -169,7 +174,18 @@
         </code></pre><br><br>
 
 
-        <h2>附:文字的两端对齐</h2>
+        <h2>四、文本的水平垂直剧中</h2>
+        <pre><code>
+        .title {
+            text-align: center;
+            line-height: 20rpx;
+            height: 20px
+        }
+        </code></pre>
+        <br><br><br><br><br><br>
+
+
+        <h2>五、文本的两端对齐</h2>
         <pre><code>
         .title {
             margin: 10px 0;
